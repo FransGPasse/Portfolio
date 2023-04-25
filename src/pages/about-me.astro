@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SpinningLogo from "../components/SpinningLogo.astro";
+---
+
+<Layout title="About me">
+  <section class="page-wrapper">
+    <div class="logo-wrapper">
+      <SpinningLogo id="logo" />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-wrapper {
+    min-height: 100%;
+  }
+
+  .logo-wrapper {
+    position: fixed;
+    bottom: -3%;
+    right: -5%;
+    max-height: min(220px, 35vh);
+    color: rgba(255, 255, 255, 0.444);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,28 +8,71 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+  <footer></footer>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;0,700;1,400;1,500&display=swap");
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  :root,
+  :root::before,
+  :root::after {
+    font: inherit;
+
+    --bg-clr: linear-gradient(
+      220deg,
+      rgb(255, 148, 90) 0%,
+      rgb(160, 101, 255) 100%
+    );
+    --secondary-clr: black;
+    --accent-clr: darkorange;
+
+    --font-main: "Poppins", sans-serif;
+    --font-mono: "cousine", monospace;
+
+    --padding: 12px;
+    --h-pad: calc(100vh - (var(--padding) * 2));
+    --h-pad: calc(100dvh - (var(--padding) * 2));
+
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg-clr);
+    font-family: var(--font-main);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Removes scrollbar but keeps functionality in Edge, Firefox... */
+    /*     scrollbar-width: none; */
+
+    padding: var(--padding);
+  }
+
+  /* ... and Chrome, Safari and Opera */
+  /* 
+  body::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+  } */
+
+  ::selection {
+    color: var(--accent-clr);
+    background: aquamarine;
+  }
 </style>
