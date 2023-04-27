@@ -4,6 +4,8 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+
+import "../styles/fonts.css";
 ---
 
 <!DOCTYPE html>
@@ -31,13 +33,13 @@ const { title } = Astro.props;
   :root::after {
     font: inherit;
 
-    --bg-clr: linear-gradient(
+    --clr-bg: linear-gradient(
       220deg,
       rgb(255, 148, 90) 0%,
       rgb(160, 101, 255) 100%
     );
-    --secondary-clr: black;
-    --accent-clr: darkorange;
+    --clr-secondary: black;
+    --clr-accent: darkorange;
 
     --font-main: "Poppins", sans-serif;
     --font-mono: "cousine", monospace;
@@ -50,7 +52,7 @@ const { title } = Astro.props;
   }
 
   body {
-    background: var(--bg-clr);
+    background: var(--clr-bg);
     font-family: var(--font-main);
     background-size: cover;
     background-repeat: no-repeat;
@@ -69,7 +71,7 @@ const { title } = Astro.props;
   } */
 
   ::selection {
-    color: var(--accent-clr);
+    color: var(--clr-accent);
     background: aquamarine;
   }
 </style>
