@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SpinningLogo from "../components/SpinningLogo.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Business in the front">
@@ -15,6 +16,7 @@ import SpinningLogo from "../components/SpinningLogo.astro";
       </p>
       <a href="#" class="text-link">Learn more</a>
     </section>
+    <Footer />
   </div>
 </Layout>
 
@@ -25,7 +27,7 @@ import SpinningLogo from "../components/SpinningLogo.astro";
     align-items: center;
     justify-content: space-evenly;
 
-    height: var(--h-pad);
+    min-height: var(--h-pad);
   }
 
   .logo-wrapper {
