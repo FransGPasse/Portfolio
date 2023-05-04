@@ -1,9 +1,10 @@
 ---
-export interface Props {
+interface Props {
   title: string;
+  noPad?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, noPad } = Astro.props;
 
 import "../styles/fonts.css";
 ---
@@ -17,7 +18,7 @@ import "../styles/fonts.css";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class:list={{ noPadding: noPad }}>
     <slot />
   </body>
 </html>
@@ -39,6 +40,8 @@ import "../styles/fonts.css";
       rgb(160, 101, 255) 100%
     );
     --clr-secondary: black;
+    --clr-white: white;
+    --clr-white-inactive: rgba(255, 255, 255, 0.577);
     --clr-accent: darkorange;
 
     --font-main: "Poppins", sans-serif;
@@ -47,31 +50,35 @@ import "../styles/fonts.css";
     --padding: 12px;
     --h-pad: calc(100vh - (var(--padding) * 2));
     --h-pad: calc(100dvh - (var(--padding) * 2));
-
-    scroll-behavior: smooth;
   }
 
   body {
+    scroll-behavior: smooth;
     background: var(--clr-bg);
+
     font-family: var(--font-main);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* Removes scrollbar but keeps functionality in Edge, Firefox... */
-    /*     scrollbar-width: none; */
 
     padding: var(--padding);
+    /* Removes scrollbar in Edge, Firefox... */
+    scrollbar-width: none;
   }
 
   /* ... and Chrome, Safari and Opera */
-  /* 
   body::-webkit-scrollbar {
     display: none;
     -ms-overflow-style: none;
-  } */
+  }
 
   ::selection {
     color: var(--clr-accent);
     background: aquamarine;
+  }
+
+  /* Helper classes */
+  .noPadding {
+    padding: 0;
   }
 </style>
