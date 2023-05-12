@@ -1,45 +1,48 @@
 <script>
+  const popUpButton = document.querySelector<HTMLElement>(".pop-up-button");
   const chevronDown = document.querySelector<HTMLElement>(".chevron-down");
   const popUpWrapper = document.querySelector<HTMLElement>(".pop-up-wrapper");
   const popUp = document.querySelector<HTMLElement>(".pop-up");
 
-  if (!chevronDown || !popUp || !popUpWrapper) {
-    throw new ReferenceError(`Element not found`);
+  if (!chevronDown || !popUp || !popUpWrapper || !popUpButton) {
+    throw new ReferenceError("One of the elements not found");
   }
 
   const togglePopUp = (): void => {
     chevronDown.classList.toggle("activeChevron");
-    popUp.classList.toggle("activePopUp");
+    popUpWrapper.classList.toggle("activePopUp");
   };
   const addPopUp = (): void => {
     chevronDown.classList.add("activeChevron");
-    popUp.classList.add("activePopUp");
+    popUpWrapper.classList.add("activePopUp");
   };
   const removePopUp = (): void => {
     chevronDown.classList.remove("activeChevron");
-    popUp.classList.remove("activePopUp");
+    popUpWrapper.classList.remove("activePopUp");
   };
 
-  chevronDown.addEventListener("click", togglePopUp);
+  popUpButton.addEventListener("click", togglePopUp);
   popUpWrapper.addEventListener("mouseover", addPopUp);
   popUpWrapper.addEventListener("mouseleave", removePopUp);
 </script>
 
 <footer>
   <div class="pop-up-wrapper">
-    <svg
-      class="chevron-down"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="48"
-        d="M112 184l144 144 144-144"></path>
-    </svg>
+    <button class="pop-up-button">
+      <svg
+        class="chevron-down"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="48"
+          d="M112 184l144 144 144-144"></path>
+      </svg>
+    </button>
     <div class="pop-up">
       <div class="socials">
         <a
@@ -128,19 +131,25 @@
     align-items: center;
     justify-content: center;
 
-    position: relative;
+    translate: 0% 65%;
+    transition: all 300ms cubic-bezier(0.79, 0.1, 0.55, 1.28) 50ms;
   }
 
   .pop-up-wrapper:hover {
     cursor: pointer;
   }
 
+  button {
+    all: unset;
+
+    padding: 2px;
+  }
+
   .chevron-down {
     color: var(--clr-white-inactive);
     height: 40px;
-    transition: translate 260ms ease-out, rotate 150ms ease-out 350ms;
+    transition: translate 260ms ease-out, rotate 150ms ease-out 400ms;
     rotate: 180deg;
-    translate: 0px 170%;
   }
 
   .pop-up-wrapper:hover .chevron-down {
@@ -148,9 +157,7 @@
   }
 
   .pop-up {
-    border-radius: 20px;
-    translate: 0% 100%;
-    transition: all 350ms ease-out;
+    position: relative;
   }
 
   .socials {
@@ -159,12 +166,26 @@
     justify-content: center;
 
     gap: 0.8rem;
+
+    margin-bottom: 10px;
+  }
+
+  .social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 150ms ease-out;
   }
 
   .social-icon {
+    position: relative;
+
     color: var(--clr-white-inactive);
     height: 32px;
-    transition: all 250ms ease-out;
+
+    transition: all 200ms ease-out;
   }
 
   #email-link {
@@ -173,11 +194,35 @@
   }
 
   .social-icon:hover,
-  #email-link:hover {
+  .social-icon:focus,
+  #email-link:hover,
+  #email-link:focus {
     color: var(--clr-white);
   }
 
-  #email-link:hover {
+  /* Experiment with pseudoelements... Perhaps do something with mix-blend-mode: difference; instead?
+   .social-link:hover::before,
+  .social-link:focus::before {
+    position: absolute;
+
+    content: "";
+
+    display: block;
+
+    height: 32px;
+    width: 32px;
+
+    padding: 2px;
+
+    border-radius: 5px;
+
+    background-color: var(--clr-accent);
+
+    z-index: 0;
+  } */
+
+  #email-link:hover,
+  #email-link:focus {
     text-decoration: underline;
   }
 
