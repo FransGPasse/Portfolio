@@ -6,6 +6,8 @@ interface Props {
 
 const { title, noPad } = Astro.props;
 
+import SpinningLogo from "../components/SpinningLogo.astro";
+
 import "../styles/fonts.css";
 ---
 
@@ -41,7 +43,7 @@ import "../styles/fonts.css";
     );
     --clr-secondary: black;
     --clr-white: white;
-    --clr-white-inactive: rgba(255, 255, 255, 0.577);
+    --clr-white-inactive: rgba(255, 255, 255, 0.67);
     --clr-accent: darkorange;
 
     --font-main: "Poppins", sans-serif;
@@ -50,6 +52,10 @@ import "../styles/fonts.css";
     --padding: 12px;
     --h-pad: calc(100vh - (var(--padding) * 2));
     --h-pad: calc(100dvh - (var(--padding) * 2));
+
+    --rounded: 5px;
+
+    --transition-custom: cubic-bezier(0.79, 0.1, 0.55, 1.28);
   }
 
   body {
