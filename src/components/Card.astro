@@ -11,13 +11,17 @@ const { href, img, imgAlt, title, body } = Astro.props;
 ---
 
 <a href={href} target="_blank">
-  <h2>
-    {title}
-  </h2>
-  <img src={img} alt={imgAlt} />
-  <p>
-    {body}
-  </p>
+  <div class="content-wrapper">
+    <div class="text-wrapper">
+      <h2>
+        {title}
+      </h2>
+      <p>
+        {body}
+      </p>
+    </div>
+    <img src={img} alt={imgAlt} />
+  </div>
 </a>
 
 <style>
@@ -37,7 +41,7 @@ const { href, img, imgAlt, title, body } = Astro.props;
     box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.05),
       -2px 4px 5px rgba(0, 0, 0, 0.2);
 
-    padding: 1.2rem;
+    padding: 0.8rem;
 
     border-radius: var(--rounded);
 
@@ -57,8 +61,39 @@ const { href, img, imgAlt, title, body } = Astro.props;
     margin-bottom: 10px;
   }
 
+  p {
+    max-width: 50ch;
+  }
+
   img {
-    height: 250px;
+    height: 150px;
+    width: 250px;
+
+    object-fit: cover;
+    object-position: top;
+
     border-radius: calc(var(--rounded) * 0.7);
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 0px 20px;
+  }
+
+  .text-wrapper {
+  }
+
+  /* Small tablet size */
+  @media screen and (min-width: 481px) {
+  }
+
+  /* Large tablet and laptop size */
+  @media screen and (min-width: 769px) {
+  }
+
+  /* Desktop size */
+  @media screen and (min-width: 1025px) {
   }
 </style>

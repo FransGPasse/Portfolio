@@ -1,18 +1,15 @@
 <script>
   const popUpButton = document.querySelector<HTMLElement>(".pop-up-button");
-  const chevronDown = document.querySelector<HTMLElement>(".chevron-down");
   const popUpWrapper = document.querySelector<HTMLElement>(".pop-up-wrapper");
 
-  if (!chevronDown || !popUpWrapper || !popUpButton) {
+  if (!popUpWrapper || !popUpButton) {
     throw new ReferenceError("One of the elements not found");
   }
 
-  const togglePopUp = (): void => {
-    chevronDown.classList.toggle("active");
+  popUpButton.addEventListener("click", (): void => {
+    popUpButton.classList.toggle("active");
     popUpWrapper.classList.toggle("active");
-  };
-
-  popUpButton.addEventListener("click", togglePopUp);
+  });
 </script>
 
 <footer>
@@ -129,10 +126,8 @@
     translate: 0px 0%;
   }
 
-  button {
+  .pop-up-button {
     all: unset;
-
-    padding: 2px;
   }
 
   .chevron-down {
