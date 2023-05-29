@@ -1,14 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import SpinningLogo from "../components/SpinningLogo.astro";
 import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Business in the front">
   <div class="page-wrapper">
-    <div class="logo-wrapper">
-      <SpinningLogo id="logo" />
-    </div>
     <section id="introduction">
       <h1>Hello there!</h1>
       <p>
@@ -36,6 +32,8 @@ import Footer from "../components/Footer.astro";
     align-items: center;
     justify-content: center;
     max-height: min(220px, 55vw);
+
+    margin-top: 5px;
   }
 
   #introduction {

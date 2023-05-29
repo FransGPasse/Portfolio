@@ -10,23 +10,23 @@ interface Props {
 const { href, img, imgAlt, title, body } = Astro.props;
 ---
 
-<a href={href} target="_blank">
-  <div class="content-wrapper">
-    <div class="text-wrapper">
-      <h2>
-        {title}
-      </h2>
-      <p>
-        {body}
-      </p>
-    </div>
-    <img src={img} alt={imgAlt} />
+<div class="card-wrapper">
+  <img src={img} alt={imgAlt} />
+  <div class="body-wrapper">
+    <h2>
+      {title}
+    </h2>
+    <p>
+      {body}
+    </p>
+    <a href={href} target="_blank">Live site</a>
   </div>
-</a>
+</div>
 
 <style>
-  a {
-    text-decoration: none;
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
 
     color: var(--clr-secondary);
 
@@ -41,18 +41,37 @@ const { href, img, imgAlt, title, body } = Astro.props;
     box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.05),
       -2px 4px 5px rgba(0, 0, 0, 0.2);
 
-    padding: 0.8rem;
-
     border-radius: var(--rounded);
 
     transition: all 250ms ease-out;
   }
 
-  a:hover,
-  a:focus {
+  .card-wrapper:hover,
+  .card-wrapper:focus {
     background: rgba(255, 255, 255, 0.206);
     translate: 0px -6px;
     box-shadow: -2px 7px 6px rgba(0, 0, 0, 0.2), -2px 9px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  img {
+    max-height: max(10rem, 30vh);
+    aspect-ratio: 4/3;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: calc(var(--rounded) * 0.7) calc(var(--rounded) * 0.7) 0 0;
+  }
+
+  .body-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+    padding: 0.7rem;
+
+    height: 100%;
   }
 
   h2 {
@@ -65,24 +84,15 @@ const { href, img, imgAlt, title, body } = Astro.props;
     max-width: 50ch;
   }
 
-  img {
-    height: 150px;
-    width: 250px;
+  a {
+    color: var(--clr-secondary);
+    text-underline-offset: 2px;
 
-    object-fit: cover;
-    object-position: top;
-
-    border-radius: calc(var(--rounded) * 0.7);
+    margin-top: auto;
   }
 
-  .content-wrapper {
-    display: flex;
-    justify-content: space-between;
-
-    gap: 0px 20px;
-  }
-
-  .text-wrapper {
+  a:hover {
+    text-decoration: none;
   }
 
   /* Small tablet size */
@@ -91,6 +101,25 @@ const { href, img, imgAlt, title, body } = Astro.props;
 
   /* Large tablet and laptop size */
   @media screen and (min-width: 769px) {
+    .card-wrapper {
+      padding: 0.8rem;
+
+      flex-direction: row-reverse;
+
+      justify-content: space-between;
+
+      gap: 1rem;
+    }
+
+    img {
+      max-height: max(8rem, 15vw);
+
+      border-radius: calc(var(--rounded) * 0.7);
+    }
+
+    .body-wrapper {
+      padding: 0;
+    }
   }
 
   /* Desktop size */

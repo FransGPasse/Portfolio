@@ -1,10 +1,13 @@
 ---
+import SpinningLogo from "../components/SpinningLogo.astro";
+
 interface Props {
   title: string;
   noPad?: boolean;
+  noLogo?: boolean;
 }
 
-const { title, noPad } = Astro.props;
+const { title, noPad, noLogo } = Astro.props;
 
 import "../styles/fonts.css";
 ---
@@ -19,6 +22,9 @@ import "../styles/fonts.css";
     <title>{title}</title>
   </head>
   <body class:list={{ noPadding: noPad }}>
+    <div class:list={{ noLogotype: noLogo }} class="logo-wrapper">
+      <SpinningLogo />
+    </div>
     <slot />
   </body>
 </html>
@@ -48,8 +54,9 @@ import "../styles/fonts.css";
     --font-mono: "Courier", monospace;
 
     --padding: 12px;
-    --h-pad: calc(100vh - (var(--padding) * 2));
-    --h-pad: calc(100dvh - (var(--padding) * 2));
+    --h-logo: min(220px, 55vw);
+    --h-pad: calc((100vh - (var(--padding) * 2)) - (var(--h-logo)));
+    --h-pad: calc((100dvh - (var(--padding) * 2)) - (var(--h-logo)));
 
     --rounded: 5px;
 
@@ -83,8 +90,22 @@ import "../styles/fonts.css";
     background: aquamarine;
   }
 
+  .logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: var(--h-logo);
+
+    margin-top: 5px;
+  }
+
   /* Helper classes */
   .noPadding {
     padding: 0;
+  }
+
+  .noLogotype {
+    display: none;
   }
 </style>
