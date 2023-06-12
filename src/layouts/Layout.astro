@@ -5,9 +5,10 @@ interface Props {
   title: string;
   noPad?: boolean;
   noLogo?: boolean;
+  noFooter?: boolean;
 }
 
-const { title, noPad, noLogo } = Astro.props;
+const { title, noPad, noLogo, noFooter } = Astro.props;
 
 import "../styles/fonts.css";
 ---
@@ -96,8 +97,6 @@ import "../styles/fonts.css";
     align-items: center;
     justify-content: center;
     height: var(--h-logo);
-
-    margin-top: 5px;
   }
 
   /* Helper classes */

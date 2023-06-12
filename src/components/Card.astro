@@ -10,21 +10,22 @@ interface Props {
 const { href, img, imgAlt, title, body } = Astro.props;
 ---
 
-<div class="card-wrapper">
+<a class="card-wrapper" href={href} target="_blank">
   <img src={img} alt={imgAlt} />
   <div class="body-wrapper">
-    <h2>
+    <h3>
       {title}
-    </h2>
+    </h3>
     <p>
       {body}
     </p>
-    <a href={href} target="_blank">Live site</a>
   </div>
-</div>
+</a>
 
 <style>
   .card-wrapper {
+    text-decoration: none;
+
     display: flex;
     flex-direction: column;
 
@@ -44,6 +45,8 @@ const { href, img, imgAlt, title, body } = Astro.props;
     border-radius: var(--rounded);
 
     transition: all 250ms ease-out;
+
+    height: 100%;
   }
 
   .card-wrapper:hover,
@@ -55,12 +58,12 @@ const { href, img, imgAlt, title, body } = Astro.props;
 
   img {
     max-height: max(10rem, 30vh);
-    aspect-ratio: 4/3;
 
     object-fit: cover;
     object-position: center;
 
     border-radius: calc(var(--rounded) * 0.7) calc(var(--rounded) * 0.7) 0 0;
+    position: relative;
   }
 
   .body-wrapper {
@@ -112,17 +115,27 @@ const { href, img, imgAlt, title, body } = Astro.props;
     }
 
     img {
-      max-height: max(8rem, 15vw);
+      margin: auto 0 auto auto;
+
+      height: 100%;
+      max-width: 50%;
 
       border-radius: calc(var(--rounded) * 0.7);
     }
 
     .body-wrapper {
       padding: 0;
+
+      max-width: 50%;
     }
   }
 
   /* Desktop size */
   @media screen and (min-width: 1025px) {
+    img {
+      height: 12rem;
+
+      border-radius: calc(var(--rounded) * 0.7);
+    }
   }
 </style>
