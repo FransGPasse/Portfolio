@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import Footer from "../components/Footer.astro";
 import { projects } from "../constants";
 ---
 
@@ -25,6 +26,7 @@ import { projects } from "../constants";
         ))
       }
     </div>
+    <Footer />
   </section>
 </Layout>
 
@@ -57,9 +59,8 @@ import { projects } from "../constants";
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 
     gap: 1rem;
-  }
 
-  .card {
+    margin-bottom: 2rem;
   }
 
   /* Small tablet size */
