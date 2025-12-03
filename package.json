@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.3.2",
-    "vue": "^3.2.47"
+    "astro": "^5.16.3",
+    "vue": "^3.5.25"
   }
 }
