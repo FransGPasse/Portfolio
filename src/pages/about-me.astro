@@ -4,23 +4,85 @@ import Layout from "../layouts/Layout.astro";
 
 <script>
   const path = document.querySelector<SVGGeometryElement>("#timeline-path");
+  const pageWrapper = document.querySelector<HTMLElement>('.page-wrapper');
+  const svg = document.querySelector<SVGElement>("#timeline-svg");
+  const timelineWrapper = document.querySelector<HTMLElement>('.timeline-wrapper');
 
-  if (path) {
+  if (path && pageWrapper && svg && timelineWrapper) {
+    const FIRST_SECTION_START = 0.2;
+    const FIRST_SECTION_STOP = 0.3;
+    
+    const SECOND_SECTION_START = 0.5;
+    const SECOND_SECTION_STOP = 0.65;
+    
+    const THIRD_SECTION_START = 0.8;
+    const THIRD_SECTION_STOP = 0.9;
+
+    const PARALLAX_MULTIPLIER_NORMAL = 0.3;
+    const PARALLAX_MULTIPLIER_SLOW = 0.1;  
+
     const pathLength: number = path.getTotalLength();
 
     path.style.strokeDasharray = pathLength + " " + pathLength;
     path.style.strokeDashoffset = pathLength.toString();
 
-    window.addEventListener("scroll", () => {
-      const scrollPercentage: number =
-        (document.documentElement.scrollTop + document.body.scrollTop) /
-        (document.documentElement.scrollHeight -
-          document.documentElement.clientHeight);
+    let fixedPageHeight = 0;
+    const setPageWrapperHeight = () => {
+      const svgHeight = svg.getBoundingClientRect().height;
+      if (svgHeight > 0) {
+        fixedPageHeight = svgHeight;
+        pageWrapper.style.height = `${svgHeight}px`;
+        document.documentElement.style.setProperty('--page-height', `${svgHeight}px`);
+      }
+    };
 
-      const drawLength: number = pathLength * scrollPercentage;
+    setPageWrapperHeight();
+    window.addEventListener("resize", setPageWrapperHeight);
+    
+    timelineWrapper.style.transform = 'translateX(-50%) translateY(0px)';
 
-      path.style.strokeDashoffset = (pathLength - drawLength).toString();
-    });
+    let rafId: number | null = null;
+    const updateScrollProgress = () => {
+      if (rafId !== null) {
+        return;
+      }
+
+      rafId = requestAnimationFrame(() => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const pageWrapperRect = pageWrapper.getBoundingClientRect();
+        const pageWrapperTop = pageWrapperRect.top + scrollTop;
+        
+        const scrollStart = Math.max(0, pageWrapperTop - windowHeight);
+        const scrollEnd = scrollStart + fixedPageHeight;
+        const scrollRange = scrollEnd - scrollStart;
+        
+        const scrollProgress = scrollRange > 0 
+          ? Math.min(Math.max((scrollTop - scrollStart) / scrollRange, 0), 1)
+          : 0;
+
+        const drawLength: number = pathLength * scrollProgress;
+        path.style.strokeDashoffset = (pathLength - drawLength).toString();
+
+        let parallaxMultiplier = PARALLAX_MULTIPLIER_NORMAL;
+
+        if (scrollProgress >= FIRST_SECTION_START && scrollProgress < FIRST_SECTION_STOP) {
+          parallaxMultiplier = PARALLAX_MULTIPLIER_SLOW;
+        } else if (scrollProgress >= SECOND_SECTION_START && scrollProgress < SECOND_SECTION_STOP) {
+          parallaxMultiplier = PARALLAX_MULTIPLIER_SLOW;
+        } else if (scrollProgress >= THIRD_SECTION_START && scrollProgress < THIRD_SECTION_STOP) {
+          parallaxMultiplier = PARALLAX_MULTIPLIER_SLOW;
+        }
+
+        const parallaxOffset = scrollTop * parallaxMultiplier;
+        timelineWrapper.style.transform = `translateX(-50%) translateY(${parallaxOffset}px)`;
+
+        rafId = null;
+      });
+    };
+
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    updateScrollProgress();
   }
 </script>
 
@@ -47,26 +109,41 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <style>
+  :root {
+    --page-height: auto;
+  }
+
   .page-wrapper {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+
+    height: var(--page-height, var(--h-pad));
+    min-height: var(--h-pad);
+    overflow: hidden;
+  }
+
+  .timeline-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    will-change: transform;
 
     min-height: var(--h-pad);
   }
 
-  .timeline-wrapper {
-    color: white;
-  }
-
   #timeline-svg {
-    height: 100%;
-    width: 300px;
+    height: auto;
+    width: 400px;
   }
 
   #timeline-path {
-    stroke-width: 1.8px;
+    stroke-width: 3px;
   }
 
   @media screen and (min-width: 481px) {
@@ -74,16 +151,19 @@ import Layout from "../layouts/Layout.astro";
 
   @media screen and (min-width: 769px) {
     #timeline-svg {
-      width: 380px;
+      width: 960px;
     }
     #timeline-path {
-      stroke-width: 2.2px;
+      stroke-width: 4px;
     }
   }
 
   @media screen and (min-width: 1025px) {
     #timeline-svg {
-      width: 400px;
+      width: 1200px;
+    }
+    #timeline-path {
+      stroke-width: 5px;
     }
   }
 </style>
